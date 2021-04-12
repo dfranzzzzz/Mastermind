@@ -8,7 +8,7 @@ class Human
   end
 
   def set_code
-    code = '1234'
+    code = "#{rand(1...7)}#{rand(1...7)}#{rand(1...7)}#{rand(1...7)}"
     code
   end
 

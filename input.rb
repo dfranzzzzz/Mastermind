@@ -3,7 +3,10 @@ module Input
     {
       'role' => "Choose your role ( c = Coder || d = Decoder ): ",
       'chance' => "Enter number of chances the decoder can guess (1-15): ",
-      'guess' => "Enter your guess: " 
+      'guess' => "Enter your guess: ",
+      'no_chances' => "You have no more chances left.",
+      'guess_right' => "You guess it right! You win!",
+      
     }[message]
   end
 
@@ -32,10 +35,6 @@ module Input
 
   def clear_screen
     system('clear')
-  end
-
-  def show_board
-    puts 'board'
   end
 
   def intro
