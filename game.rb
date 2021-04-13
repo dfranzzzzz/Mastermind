@@ -1,14 +1,13 @@
 require_relative 'input'
 require_relative 'display'
-require_relative 'colors'
 require_relative 'human'
 require_relative 'board'
 
 class Game
   include Input
   include Display
-  attr_reader :role, :player, :code, :guess
-  attr_accessor :num_chance, :board
+  attr_reader :role, :player, :code, :guess, :board
+  attr_accessor :num_chance
 
   def initialize
     puts intro
@@ -29,13 +28,18 @@ class Game
 
   def no_chance?(message)
     return false if num_chance > 0
+    board.update_board(-2, code, " ", " ")
+    clear_screen
+    puts board.board
     puts message
-    puts @code
     return true
   end
 
   def guess_right?(message)
     return false unless guess == code
+    board.update_board(-2, code, " ", " ")
+    clear_screen
+    puts board.board
     puts message
     return true
   end
@@ -60,24 +64,21 @@ class Game
     @board = Board.new(@num_chance)
   end
 
-  def show_board
-    a = same_elements
-    b = same_position
-    puts top_row
-    @num_chance.times {
-      puts game_row(a, b)
-    }
-    puts bottom_row
-  end
-
   def game_loop
     @guess = ''
+    @curr_row = 1
 
     while true
       clear_screen
-      show_board
+      puts board.board
       num_chance?
       @guess = player.get_guess
+      a = same_elements
+      b = same_position
+      clear_screen
+      board.update_board(@curr_row, guess, a, b)
+      puts board.board
+      @curr_row += 2
       break if guess_right?(print_text('guess_right'))
       decrease_chance
       break if no_chance?(print_text('no_chances'))

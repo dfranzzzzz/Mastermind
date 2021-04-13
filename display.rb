@@ -23,8 +23,17 @@ module Display
     BOTTOM_LEFT + HOR * 3 + T_UP + HOR * 12 + T_UP + HOR * 3 + BOTTOM_RIGHT
   end
 
-  def game_row(right_col, right_pos)
-  "#{VER} #{right_col} #{VER}            #{VER} #{right_pos} #{VER}"
+  def empty_row
+  "#{VER}   #{VER}            #{VER}   #{VER}"
+  end
+
+  def guess_row(guess, right_col, right_pos)
+    guess = guess.split('')
+    "#{VER} #{right_col} #{VER} #{guess[0]}  #{guess[1]}  #{guess[2]}  #{guess[3]} #{VER} #{right_pos} #{VER}"
+  end
+
+  def answer_row
+    "#{VER}   #{VER}   answer   #{VER}   #{VER}"
   end
 end
 
