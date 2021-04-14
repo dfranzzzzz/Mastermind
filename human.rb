@@ -1,14 +1,16 @@
 require_relative 'input'
+require_relative 'display'
 
 class Human
   include Input
+  include Display
 
   def initialize
-    puts 'decoder'
+    puts 'You chose to be the decoder.'
   end
 
   def set_code
-    code = "#{rand(1...7)}#{rand(1...7)}#{rand(1...7)}#{rand(1...7)}"
+    code = "#{CHOICES.sample}#{CHOICES.sample}#{CHOICES.sample}#{CHOICES.sample}"
     code
   end
 

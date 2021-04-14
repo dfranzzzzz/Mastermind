@@ -36,7 +36,7 @@ class Game
   end
 
   def guess_right?(message)
-    return false unless guess == code
+    return false unless guess.join('') == code
     board.update_board(-2, code, " ", " ")
     clear_screen
     puts board.board
@@ -49,12 +49,12 @@ class Game
   end
 
   def same_elements
-    same = guess.split('') & code.split('')
+    same = guess & code.split('')
     same.length
   end
 
   def same_position
-    a = guess.split('')
+    a = guess
     b = code.split('')
     c = a.zip(b).count { |a,b| a == b }
     c
@@ -65,20 +65,20 @@ class Game
   end
 
   def game_loop
-    @guess = ''
-    @curr_row = 1
+    curr_row = 1
 
     while true
       clear_screen
       puts board.board
       num_chance?
+      puts show_choices
       @guess = player.get_guess
       a = same_elements
       b = same_position
       clear_screen
-      board.update_board(@curr_row, guess, a, b)
+      board.update_board(curr_row, guess, a, b)
       puts board.board
-      @curr_row += 2
+      curr_row += 2
       break if guess_right?(print_text('guess_right'))
       decrease_chance
       break if no_chance?(print_text('no_chances'))
@@ -94,5 +94,3 @@ class Game
     game_loop
   end
 end
-
-Game.new.game_flow

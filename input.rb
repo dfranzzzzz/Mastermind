@@ -1,12 +1,15 @@
+require_relative 'display'
+
 module Input
+  include Display
+
   def print_text(message)
     {
       'role' => "Choose your role ( c = Coder || d = Decoder ): ",
       'chance' => "Enter number of chances the decoder can guess (1-15): ",
-      'guess' => "Enter your guess: ",
+      'guess' => "Enter your guess(Pick 4 among the choices and without spaces): ",
       'no_chances' => "You lose. You have no more chances left.",
-      'guess_right' => "You guess it right! You win!",
-      
+      'guess_right' => "You guessed it right! You win!",
     }[message]
   end
 
@@ -28,9 +31,13 @@ module Input
     chance
   end
 
-  def prompt_guess(message)
-    print message
-    guess = gets.chomp
+  def prompt_guess(message)   
+    guess = ['a', 'b', 'c', 'd']
+    until guess.all? { | str | CHOICES.include?(str) } && guess.length == 4
+      print message
+      guess = gets.chomp.split('')
+    end
+    guess
   end
 
   def clear_screen
@@ -45,7 +52,7 @@ module Input
         1. The #{'CODER'.bold.red}, who will set a combination of four colors.
         2. The #{'DECODER'.bold.blue}, who will guess the combination the coder has come up with.
 
-      In the game, the coder will be given 7 colors to choose from to formulate the 
+      In the game, the coder will be given 6 colors to choose from to formulate the 
       combination that has to be decoded.
         1. #{"\u2b24".red} - Red
         2. #{"\u2b24".green} - Green
@@ -53,7 +60,6 @@ module Input
         4. #{"\u2b24".blue} - Blue
         5. #{"\u2b24".purple} - Purple
         6. #{"\u2b24".cyan} - Cyan
-        7. #{"\u2b24".white} - White
 
       The chances that the #{'DECODER'.bold.blue} will be given will also be decided in the beginning
       of the game. If the the #{'DECODER'.bold.blue} fails to guess the combination under the given 
@@ -63,9 +69,9 @@ module Input
 
       The #{'DECODER'.bold.blue} will be given hints along the game to help him come up with the right
       combination. After the #{'DECODER'.bold.blue} makes a guess of the combination, it will be shown
-      to him the number of correct colors, as well as the number of colors that are in the right places 
-      present in his latest guess. 
+      to him the number of correct colors on the left side of the board, as well as the number of 
+      colors that are in the right places, which will be shown on the right side of the board. 
+
     HEREDOC
   end
-
 end
