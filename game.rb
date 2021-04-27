@@ -6,16 +6,12 @@ require_relative 'board'
 class Game
   include Input
   include Display
-  attr_reader :role, :player, :code, :guess, :board
+  attr_reader :player, :code, :guess, :board
   attr_accessor :num_chance
 
   def initialize
     puts intro
-  end
-
-  def game_mode
-    @role = prompt_role(print_text('role'))
-    role == 'c' ? @player = Computer.new : @player = Human.new
+    @player = Human.new
   end
 
   def chance
@@ -73,10 +69,11 @@ class Game
       num_chance?
       puts show_choices
       @guess = player.get_guess
-      a = same_elements
-      b = same_position
+      a = same_position
+      b = same_elements - a
+      b = 0 if b < 0 
       clear_screen
-      board.update_board(curr_row, guess, a, b)
+      board.update_board(curr_row, guess, b, a)
       puts board.board
       curr_row += 2
       break if guess_right?(print_text('guess_right'))
@@ -86,7 +83,6 @@ class Game
   end
 
   def game_flow
-    game_mode
     chance
     clear_screen
     create_board

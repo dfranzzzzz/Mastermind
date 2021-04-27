@@ -6,7 +6,7 @@ class Human
   include Display
 
   def initialize
-    puts 'You chose to be the decoder.'
+    puts "You are the " + 'DECODER'.bold.blue
   end
 
   def set_code

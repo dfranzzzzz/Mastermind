@@ -5,21 +5,11 @@ module Input
 
   def print_text(message)
     {
-      'role' => "Choose your role ( c = Coder || d = Decoder ): ",
-      'chance' => "Enter number of chances the decoder can guess (1-15): ",
+      'chance' => "Enter number of chances you will guess (1-15): ",
       'guess' => "Enter your guess(Pick 4 among the choices and without spaces): ",
       'no_chances' => "You lose. You have no more chances left.",
       'guess_right' => "You guessed it right! You win!",
     }[message]
-  end
-
-  def prompt_role(message)
-    role = ''
-    until role == 'c' || role == 'd'
-      print message
-      role = gets.chomp.downcase
-    end
-    role
   end
 
   def prompt_chance(message)
@@ -69,8 +59,12 @@ module Input
 
       The #{'DECODER'.bold.blue} will be given hints along the game to help him come up with the right
       combination. After the #{'DECODER'.bold.blue} makes a guess of the combination, it will be shown
-      to him the number of correct colors on the left side of the board, as well as the number of 
-      colors that are in the right places, which will be shown on the right side of the board. 
+      to him the number of correct colors on the left side of the board, as well as the 
+      number of colors that are in the right places, which will be shown on the right 
+      side of the board. 
+
+      For this program, the computer will serve as the #{'CODER'.bold.red} that would randomize the 
+      set of colors, and the user will serve as the #{'DECODER'.bold.blue}
 
     HEREDOC
   end
